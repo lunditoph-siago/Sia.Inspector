@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sia.Inspector.API", "Sia.Inspector.API\Sia.Inspector.API.csproj", "{D75789B8-199B-4130-B1AD-73C820A3DDD8}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Sia.Inspector.WebUI", "Sia.Inspector.WebUI\Sia.Inspector.WebUI.esproj", "{A3C7777A-8EE3-4C65-A462-15A602460802}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D75789B8-199B-4130-B1AD-73C820A3DDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D75789B8-199B-4130-B1AD-73C820A3DDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D75789B8-199B-4130-B1AD-73C820A3DDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D75789B8-199B-4130-B1AD-73C820A3DDD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C7777A-8EE3-4C65-A462-15A602460802}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
