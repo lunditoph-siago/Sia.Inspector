@@ -63,6 +63,12 @@
         [No entity]
         {{/data}}
     </template>
+
+    <template id="addon-list">
+        {{#data}}
+        <li class="addon">{{type}}</li>
+        {{/data}}
+    </template>
 </head>
 
 <body hx-ext="client-side-templates">
@@ -79,5 +85,10 @@
     <div hx-get="https://localhost:7030/hosts"
          hx-trigger="load"
          mustache-array-template="host-list"></div>
+
+    <h2>Addons</h2>
+    <div hx-get="https://localhost:7030/addons"
+         hx-trigger="load"
+         mustache-array-template="addon-list"></div>
 </body>
 </html>
