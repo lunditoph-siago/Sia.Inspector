@@ -1,4 +1,4 @@
-namespace Sia.WebInspector.API.Examples;
+namespace Sia.Inspector.API.Examples;
 
 using Sia.Reactors;
 using System.Numerics;
@@ -25,7 +25,7 @@ public record struct Name([Sia] string Value)
 [SiaBundle]
 public partial record struct GameObject(Sid<ObjectId> Id, Name Name);
 
-public record struct HP([Sia] int Value);
+public partial record struct HP([Sia] int Value);
 
 public class HealthUpdateSystem()
     : SystemBase(
@@ -34,7 +34,7 @@ public class HealthUpdateSystem()
     public override void Execute(World world, Scheduler scheduler, IEntityQuery query)
     {
         foreach (var entity in query) {
-            ref var hp = ref entity.Get<HP>();
+            var hp = new HP.View(entity);
             hp.Value--;
         }
     }
@@ -110,10 +110,11 @@ public static class TestObject
 
 public static partial class ExampleWorld
 {
-    public static World Create()
+    public static World Create(out Scheduler scheduler)
     {
         var world = new World();
-        var scheduler = new Scheduler();
+        Context<World>.Current = world;
+        scheduler = new Scheduler();
 
         SystemChain.Empty
             .Add<HealthUpdateSystem>()
@@ -122,6 +123,7 @@ public static partial class ExampleWorld
 
         TestObject.Create(world);
         TestObject.CreateWithDynBundle(world);
+
         return world;
     }
 }

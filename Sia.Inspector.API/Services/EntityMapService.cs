@@ -1,4 +1,4 @@
-namespace Sia.WebInspector.API.Services;
+namespace Sia.Inspector.API.Services;
 
 using System.Runtime.CompilerServices;
 

@@ -4,10 +4,80 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Sia Inspector</title>
+
+    <script src="https://unpkg.com/htmx.org"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/sse.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://unpkg.com/mustache"></script>
+
+    <template id="world-event">
+        <li>Entity {{entity}}: {{type}}</li>
+    </template>
+
+    <template id="entity-event">
+        <li>Event: {{.}}</li>
+    </template>
+
+    <template id="host-list">
+        {{#data}}
+        <div class="host">
+            <h3>Host {{id}}</h3>
+            <ul>
+                <li>Capacity: {{capacity}}</li>
+                <li>Count: {{count}}</li>
+                <li>
+                    Components:
+                    <ol>
+                        {{#desc}}<li>{{.}}</li>{{/desc}}
+                    </ol>
+                </li>
+                <li>
+                    Entities:
+                    <ul hx-get="https://localhost:7030/hosts/{{id}}/entities"
+                        hx-trigger="load"
+                        mustache-array-template="entity-list"></ul>
+                </li>
+            </ul>
+        </div>
+        {{/data}}
+    </template>
+
+    <template id="entity-list">
+        {{#data}}
+        <li class="entity"
+            hx-ext="sse"
+            sse-connect="https://localhost:7030/entities/{{.}}/events?unnamed=true&full=false">
+            Id: {{.}}
+            <span hx-ext="ignore:client-side-templates"
+                  hx-get="https://localhost:7030/entities/{{.}}/comps"
+                  hx-trigger="load, sse:message"></span><br/>
+            <ul sse-swap="message"
+                hx-swap="beforeend"
+                mustache-template="entity-event"></ul>
+        </li>
+        {{/data}}
+
+        {{^data}}
+        [No entity]
+        {{/data}}
+    </template>
 </head>
-<body>
-<div id="app"></div>
-<script type="module" src="/src/index.js"></script>
+
+<body hx-ext="client-side-templates">
+    <h1>Sia Inspector</h1>
+
+    <h2>World Events</h2>
+    <div hx-ext="sse"
+         sse-connect="https://localhost:7030/events?unnamed=true&full=false"
+         sse-swap="message"
+         hx-swap="beforeend"
+         mustache-template="world-event"></div>
+        
+    <h2>Hosts</h2>
+    <div hx-get="https://localhost:7030/hosts"
+         hx-trigger="load"
+         mustache-array-template="host-list"></div>
 </body>
 </html>

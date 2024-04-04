@@ -1,4 +1,4 @@
-namespace Sia.WebInspector.API.Reponses;
+namespace Sia.Inspector.API.Reponses;
 
 using CommunityToolkit.HighPerformance.Buffers;
 
@@ -31,7 +31,7 @@ public static class EntityRefExtensions
 
     public static IEnumerable<object> GetComponentsResponse(this EntityRef entity, HttpContext context)
     {
-        var owner = MemoryOwner<object?>.Allocate(entity.Descriptor.FieldOffsets.Count);
+        var owner = MemoryOwner<object?>.Allocate(entity.Descriptor.Offsets.Count);
         context.Response.RegisterForDispose(owner);
 
         var array = owner.DangerousGetArray();

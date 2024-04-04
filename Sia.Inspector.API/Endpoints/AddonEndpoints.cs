@@ -1,7 +1,6 @@
-namespace Sia.WebInspector.API.Endpoints;
+namespace Sia.Inspector.API.Endpoints;
 
-using Sia.WebInspector.API.Reponses;
-using Sia.WebInspector.API.Services;
+using Sia.Inspector.API.Services;
 
 public static class AddonEndpoints
 {
@@ -9,19 +8,25 @@ public static class AddonEndpoints
     {
         var group = app.MapGroup(prefix + "addons");
 
-        group.MapGet("/", (World world, AddonMapService addonMap) =>
-            world.Addons.Select(addon =>
-                new {
-                    id = addonMap[addon],
-                    type = addon.GetType().ToString()
-                }));
+        group.MapGet("/", (SiaService sia, AddonMapService addonMap) => {
+            lock (sia.Lock) {
+                return sia.World.Addons.Select(
+                    addon => new {
+                        id = addonMap[addon],
+                        type = addon.GetType().ToString()
+                    }).ToJsonResult();
+            }
+        });
         
-        group.MapGet("/{addonId:long}", (long addonId, AddonMapService addonMap) =>
-            addonMap.ToResult(addonId, addon =>
-                Results.Json(new {
-                    type = addon.GetType().ToString(),
-                    value = addon
-                }, SiaJsonOptions.Addon)));
+        group.MapGet("/{addonId:long}", (long addonId, SiaService sia, AddonMapService addonMap) => {
+            lock (sia.Lock) {
+                return addonMap.ToResult(addonId,
+                    addon => Results.Json(new {
+                        type = addon.GetType().ToString(),
+                        value = addon
+                    }, SiaJsonOptions.Addon));
+            }
+        });
 
         return app;
     }

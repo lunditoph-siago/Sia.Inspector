@@ -1,6 +1,6 @@
-namespace Sia.WebInspector.API;
+namespace Sia.Inspector.API;
 
-using Sia.WebInspector.API.Endpoints;
+using Sia.Inspector.API.Endpoints;
 
 public static class SiaEndpointsExtensions
 {

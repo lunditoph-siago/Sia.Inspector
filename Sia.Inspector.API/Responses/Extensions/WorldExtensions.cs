@@ -1,4 +1,4 @@
-namespace Sia.WebInspector.API.Reponses;
+namespace Sia.Inspector.API.Reponses;
 
 public static class WorldExtensions
 {
